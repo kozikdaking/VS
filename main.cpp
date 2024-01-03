@@ -1,30 +1,28 @@
 #include <SFML/Graphics.hpp>
 #include "player.h"
+#include "Knife.h"
 
 
 int main()
 {
     //-------------------------------INITIALIZE----------------------------
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "GAME");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
     window.setFramerateLimit(240);
     //-------------------------------INITIALIZE----------------------------
 
     Player player;
-    //Enemy enemy;
+    Knife knife;
     sf::Clock clock;
 
-    //-------------------------------INITIALIZE----------------------------
-
-    player.Initialize();
-    //enemy.Initialize();
-    //-------------------------------INITIALIZE----------------------------
-
-    //--------------------------------LOAD----------------------------
+    //-----------------------------------LOAD----------------------------
+    knife.Load();
     player.Load();
-    //enemy.Load();
-    //--------------------------------LOAD----------------------------
+    //-----------------------------------LOAD----------------------------
+
+    //--------------------------------INITIALIZE----------------------------
+    player.Initialize();
+    knife.Initialize();
+    //--------------------------------INITIALIZE----------------------------
 
     //--------------------------------UPDATE----------------------------
     while (window.isOpen())
@@ -39,14 +37,13 @@ int main()
         }
 
         player.Update(deltaTimeSeconds, window);
-        //enemy.Update(player, deltaTimeSeconds);
 
         //--------------------------------UPDATE----------------------------
 
         //--------------------------------DRAW----------------------------
         window.clear();
-        //enemy.Draw(window);
         player.Draw(window, deltaTimeSeconds);
+        knife.Draw(window);
         window.display();
     }
     //--------------------------------DRAW----------------------------
