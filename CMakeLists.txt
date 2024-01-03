@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(VSclone)
 
-find_package(SFML 2.5 COMPONENTS graphics window system network audio REQUIRED) 
+find_package(SFML COMPONENTS graphics window system network audio REQUIRED) 
 
-set(SOURCES
-    src/main.cpp
-)
+file(GLOB SOURCES "src/*.cpp")
 
 add_executable(VSclone.exe ${SOURCES})
 
