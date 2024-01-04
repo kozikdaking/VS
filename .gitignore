@@ -33,3 +33,8 @@
 
 # Build files
 build/
+_deps/
+.vs/
+.vscode/
+build_release/
+CMakeFiles/

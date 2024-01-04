@@ -1,14 +1,20 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.0)
+
 project(VSclone)
 
-find_package(SFML 2.5 COMPONENTS graphics window system network audio REQUIRED) 
+# Set the path to SFMLConfig.cmake
+set(SFML_DIR "C:\\SFML-2.5.0\\lib\\cmake\\SFML")
 
-set(SOURCES
-    src/main.cpp
-)
+# Find SFML
+find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
-add_executable(VSclone.exe ${SOURCES})
+# Add your source files
+add_executable(vsclone src/main.cpp)
 
-target_link_libraries(VSclone.exe sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
+# Link SFML
+target_link_libraries(vsclone sfml-graphics)
 
-include_directories(${SFML_INCLUDE_DIR})
+add_custom_command(TARGET vsclone POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       "C:\\SFML-2.5.0\\bin"
+                       $<TARGET_FILE_DIR:vsclone>)
