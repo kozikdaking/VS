@@ -3,7 +3,7 @@
 void Player::Load()
 {
 
-    if (texture.loadFromFile("images/spritesheet.png"))
+    if (texture.loadFromFile("images/sprite.png"))
     {
         std::cout << "Player image has been loaded" << std::endl;
 
@@ -13,7 +13,7 @@ void Player::Load()
         std::cout << "Player image load has been failed" << std::endl;
     }
     sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, 30, 31));
+    sprite.setTextureRect(sf::IntRect(0, 0, 34, 33));
     sprite.setPosition(sf::Vector2f(600, 800));
 
 }
@@ -25,11 +25,11 @@ void Player::Initialize()
 
 void Player::Update(float deltaTime, sf::RenderWindow& window)
 {
-    int frameWidth = 30;
+    int frameWidth = 34;
     int frameHeight = 33;
     int numFrames = 4;
     int xTexture = 0;
-    float animationSpeed = 0.5f;
+    float animationSpeed = 0.9f;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         xTexture = int(sprite.getPosition().x / frameWidth * animationSpeed) % numFrames;

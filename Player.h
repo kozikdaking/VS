@@ -10,7 +10,6 @@ private:
     float playerSpeed = 0.5f;
     sf::Texture texture;
     sf::Sprite sprite;
-    sf::CircleShape shape;
 
 public:
     void Load();
@@ -18,5 +17,7 @@ public:
     void Update(float deltaTime, sf::RenderWindow& window);
     void Draw(sf::RenderWindow& window, float deltaTime);
     sf::Vector2f getPosition() const;
+    sf::Vector2f getPlayerPosition() const {
+        return sprite.getPosition();
+    }
 };
-

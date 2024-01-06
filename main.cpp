@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "player.h"
+#include "Player.h"
 #include "Knife.h"
-
 
 int main()
 {
@@ -9,11 +8,10 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "GAME");
     window.setFramerateLimit(240);
     //-------------------------------INITIALIZE----------------------------
-
+   
     Player player;
     Knife knife;
     sf::Clock clock;
-
     //-----------------------------------LOAD----------------------------
     knife.Load();
     player.Load();
@@ -37,7 +35,7 @@ int main()
         }
 
         player.Update(deltaTimeSeconds, window);
-
+        knife.Update(deltaTimeSeconds, window, player);
         //--------------------------------UPDATE----------------------------
 
         //--------------------------------DRAW----------------------------
@@ -50,3 +48,11 @@ int main()
 
     return 0;
 }
+// move code to the knife.cpp
+// add static int to the width/height
+// remove bullets when they across the border of the screen
+// create some pointers
+// try to find better logic
+// change cooldown of the bullet(?)
+// commit as "added knife dir"
+// upload on git
