@@ -1,28 +1,17 @@
 #include <stdio.h>
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include "../include/Game.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
-
-    while (window.isOpen())
+    Game game;
+    if (!game.Initialize())
     {
-        // Process events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
- 
-        // Clear screen
-        window.clear();
- 
-        // Update the window
-        window.display();
+        std::cout << "Game failed to initialize\n";
+        return -1;
     }
+    game.RunLoop();
+    
  
-    return EXIT_SUCCESS;
+    return 0;
 }
