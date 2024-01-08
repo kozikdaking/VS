@@ -1,9 +1,10 @@
 #include "../include/Game.hpp"
 
 Game::Game()
-:mWindow(sf::VideoMode(800, 600), "My window")
+:mWindow(sf::VideoMode(1920, 1080), "My window")
 ,mIsRunning(true)
 { 
+    mWindow.setFramerateLimit(60);
 }
 
 Game::~Game()
@@ -11,7 +12,10 @@ Game::~Game()
 
 bool Game::Initialize()
 {
-    // Todo: Loading enemy graphics
+    mKnife.Load();
+    mPlayer.Load();
+    mPlayer.Initialize();
+    mKnife.Initialize();
     return true;
 }
 
@@ -27,7 +31,8 @@ void Game::RunLoop()
 
 void Game::ProcessInput()
 {
-    //Process keyboard input
+    sf::Time deltaTime = mClock.restart();
+    mDeltaTime = deltaTime.asMilliseconds();
     sf::Event event;
     while (mWindow.pollEvent(event))
     {
@@ -38,13 +43,15 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
-    //Update entities
+    mPlayer.Update(mDeltaTime, mWindow);
+    mKnife.Update(mDeltaTime, mWindow, mPlayer);
 }
 
 void Game::GenerateOutput()
 {
     mWindow.clear();
-    // Draw entities to the screen
+    mPlayer.Draw(mWindow, mDeltaTime);
+    mKnife.Draw(mWindow, mDeltaTime);
     mWindow.display();
 }
 
