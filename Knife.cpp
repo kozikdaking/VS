@@ -39,20 +39,22 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 		shootingDirection = sf::Vector2f(0.0, -1.0);
 	}
 
+
+	// rotation of the image
+
 	if (shootClock.getElapsedTime().asMilliseconds() >= shootCooldown)
 	{
 		if (shootingDirection != sf::Vector2f(0.0f, 0.0f))
 		{
-			sf::Sprite bullet;  // Using Sprite instead of CircleShape
+			sf::Sprite bullet;
 			bullet.setTexture(texture);
-			bullet.setOrigin(30, 30);
 			bullet.setScale(0.5,0.5);
 
 			if (shootingDirection.x < 0.0f) {
-				bullet.setScale(-0.5f, 0.5f); // Zmiana skali
+				bullet.setScale(-0.5f, 0.5f);
 			}
 			else if (shootingDirection.x > 0.0f) {
-				bullet.setScale(0.5f, 0.5f); // Zmiana skali
+				bullet.setScale(0.5f, 0.5f);
 			}
 
 			if (shootingDirection.y < 0.0f) {
@@ -62,8 +64,7 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 				bullet.setRotation(90.0f);
 			}
 
-			bullet.setPosition(playerPosition + shootingDirection * distanceFromPlayer);
-			//bullet.setPosition(playerPosition);
+			bullet.setPosition(playerPosition);
 			bullets.push_back(bullet);
 			bulletDirections.push_back(shootingDirection);
 			shootClock.restart();
@@ -78,7 +79,7 @@ void Knife::Draw(sf::RenderWindow& window)
 
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i].move(bulletDirections[i] * 5.0f); // Adjust speed as needed
+		bullets[i].move(bulletDirections[i] * 3.0f); // Adjust speed as needed
 		window.draw(bullets[i]);
 	}
 }

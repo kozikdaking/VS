@@ -26,7 +26,7 @@ int main()
     while (window.isOpen())
     {
         sf::Time deltaTime = clock.restart();
-        double deltaTimeSeconds = deltaTime.asMilliseconds();
+        float deltaTimeSeconds = deltaTime.asMilliseconds();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -48,11 +48,9 @@ int main()
 
     return 0;
 }
-// move code to the knife.cpp
-// add static int to the width/height
+
+//remove sf::spritebullet
+//move knife bind to the player class
 // remove bullets when they across the border of the screen
 // create some pointers
-// try to find better logic
-// change cooldown of the bullet(?)
-// commit as "added knife dir"
-// upload on git
+// try to find better logic(dir to player pos dir)

@@ -9,11 +9,10 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::Vector2f shootingDirection;  // Direction in which the player is shooting
-	std::vector<sf::Sprite> bullets;  // Using Sprite instead of CircleShape
+	std::vector<sf::Sprite> bullets;
 	std::vector<sf::Vector2f> bulletDirections;
-	sf::Clock shootClock;  // Clock for shooting cooldown
-	const float shootCooldown = 500.0f;  // Cooldown in milliseconds
-	const float distanceFromPlayer = 20.0f;
+	sf::Clock shootClock;
+	const float shootCooldown = 500.0f; //as ms
 
 public:
 	void Load();

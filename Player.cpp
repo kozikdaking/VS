@@ -38,6 +38,7 @@ void Player::Update(float deltaTime, sf::RenderWindow& window)
 
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0.6, 0.0) * playerSpeed * deltaTime);
+
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
