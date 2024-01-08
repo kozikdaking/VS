@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <iostream>
 #include "../include/Game.hpp"
 
@@ -11,7 +10,6 @@ int main()
         return -1;
     }
     game.RunLoop();
-    
- 
+   
     return 0;
 }
