@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "player.h"
+#include "../include/Player.hpp"
 
 
 int main()

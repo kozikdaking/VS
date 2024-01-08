@@ -1,0 +1,51 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build files
+build/
+build_release/
+CMakeFiles/
+build_release/
+*.cmake
+*.txt
+
+# VSCode project files
+.vscode/
+_deps/
+.vs/
+.vscode/
+
+# Visual studio project files
+*.vcxproj
+*.filters
+*.sln
