@@ -15,6 +15,8 @@ find_package(SFML 2.5 COMPONENTS system graphics window network audio REQUIRED)
 set(SOURCES
     src/Game.cpp
     src/main.cpp
+    src/Knife.cpp
+    src/Player.cpp
 )
 
 # Add your source files

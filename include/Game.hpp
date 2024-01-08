@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Knife.hpp"
+#include "Player.hpp"
 
 class Game
 {
@@ -27,6 +29,10 @@ private:
     std::unordered_map<std::string, std::vector<sf::Texture*>> mTextures;
     std::vector<class Entity*> mEntities;
     sf::RenderWindow mWindow;
+    sf::Clock mClock;
+    Player mPlayer;
+    Knife mKnife;
+    float mDeltaTime;
 
     bool mIsRunning;
 
