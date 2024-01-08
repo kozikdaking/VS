@@ -33,6 +33,19 @@
 
 # Build files
 build/
+build_release/
+CMakeFiles/
+build_release/
+*.cmake
+*.txt
 
 # VSCode project files
 .vscode/
+_deps/
+.vs/
+.vscode/
+
+# Visual studio project files
+*.vcxproj
+*.filters
+*.sln
