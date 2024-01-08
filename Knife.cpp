@@ -15,7 +15,10 @@ void Knife::Load()
 void Knife::Initialize()
 {
 	sprite.setTexture(texture);
-	sprite.setOrigin(30, 30);
+	sprite.setScale(0.5, 0.5);
+
+	bullet.setTexture(texture);
+	bullet.setScale(0.5, 0.5);
 }
 
 void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& player)
@@ -39,29 +42,28 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 		shootingDirection = sf::Vector2f(0.0, -1.0);
 	}
 
-
-	// rotation of the image
-
 	if (shootClock.getElapsedTime().asMilliseconds() >= shootCooldown)
 	{
 		if (shootingDirection != sf::Vector2f(0.0f, 0.0f))
 		{
-			sf::Sprite bullet;
-			bullet.setTexture(texture);
-			bullet.setScale(0.5,0.5);
+			bullet.setRotation(0.0f);
+			bullet.setScale(0.5f, 0.5f);
 
-			if (shootingDirection.x < 0.0f) {
-				bullet.setScale(-0.5f, 0.5f);
+			if (shootingDirection.x < 0.0f)
+			{
+				bullet.setScale(-0.5f, 0.5f); //left
 			}
-			else if (shootingDirection.x > 0.0f) {
-				bullet.setScale(0.5f, 0.5f);
+			else if (shootingDirection.x > 0.0f)
+			{
+				bullet.setRotation(0.0f); //right
 			}
-
-			if (shootingDirection.y < 0.0f) {
-				bullet.setRotation(-90.0f);
+			if (shootingDirection.y < 0.0f)
+			{
+				bullet.setRotation(-90.0f); //bottom
 			}
-			else if (shootingDirection.y > 0.0f) {
-				bullet.setRotation(90.0f);
+			else if (shootingDirection.y > 0.0f)
+			{
+				bullet.setRotation(90.0f); //top
 			}
 
 			bullet.setPosition(playerPosition);
@@ -71,15 +73,30 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 		}
 	}
 
+	for (int i = 0; i < bullets.size(); )
+	{
+		bullets[i].move(bulletDirections[i] * speed * deltaTime);
+
+		sf::Vector2f bulletPosition = bullets[i].getPosition();
+		if (bulletPosition.x < 0 || bulletPosition.x > window.getSize().x ||
+			bulletPosition.y < 0 || bulletPosition.y > window.getSize().y)
+		{
+			//std::cout << "bullet has been removed" << std::endl;
+			bullets.erase(bullets.begin() + i);
+			bulletDirections.erase(bulletDirections.begin() + i);
+		}
+		else
+		{
+			i++;
+		}
+	}
 }
 
-void Knife::Draw(sf::RenderWindow& window)
+void Knife::Draw(sf::RenderWindow& window, float deltaTime)
 {
-	window.draw(sprite);
-
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i].move(bulletDirections[i] * 3.0f); // Adjust speed as needed
+		bullets[i].move(bulletDirections[i] * speed * deltaTime);
 		window.draw(bullets[i]);
 	}
 }

@@ -3,7 +3,7 @@
 void Player::Load()
 {
 
-    if (texture.loadFromFile("images/sprite.png"))
+    if (texture.loadFromFile("images/player.png"))
     {
         std::cout << "Player image has been loaded" << std::endl;
 

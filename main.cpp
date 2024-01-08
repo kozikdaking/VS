@@ -41,7 +41,7 @@ int main()
         //--------------------------------DRAW----------------------------
         window.clear();
         player.Draw(window, deltaTimeSeconds);
-        knife.Draw(window);
+        knife.Draw(window,deltaTimeSeconds);
         window.display();
     }
     //--------------------------------DRAW----------------------------
