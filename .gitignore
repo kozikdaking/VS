@@ -38,3 +38,11 @@ _deps/
 .vscode/
 build_release/
 CMakeFiles/
+build_release/
+*.cmake
+*.txt
+
+# Visual studio project files
+*.vcxproj
+*.filters
+*.sln
