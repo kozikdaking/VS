@@ -7,11 +7,11 @@
 class Entity
 {
 public:
-    Entity() = default;
+    Entity(class Game* game);
     ~Entity() = default;
-    virtual void Update(sf::Clock &clock) = 0;
-    virtual void Draw(sf::RenderWindow &window) = 0;
-    virtual void DrawAnimation(sf::Clock &clock) = 0;
+    void Update();
+    void Draw();
+    void DrawAnimation();
     bool LoadEntitySheet(const std::string &k_filename);
 
 protected:
@@ -19,4 +19,5 @@ protected:
     sf::Texture m_sprite_sheet;
     sf::Vector2f m_position;
     float m_speed;
+    class Game* m_game;
 };

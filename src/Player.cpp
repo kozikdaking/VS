@@ -1,4 +1,11 @@
+#include "../include/Game.hpp"
 #include "../include/Player.hpp"
+
+Player::Player(Game* game)
+:Entity(game)
+{
+
+}
 
 void Player::Load()
 {
@@ -23,7 +30,7 @@ void Player::Initialize()
     sprite.setScale(2.0f, 2.0f);
 }
 
-void Player::Update(float deltaTime, sf::RenderWindow& window)
+void Player::Update()
 {
     int frameWidth = 30;
     int frameHeight = 33;
@@ -37,7 +44,7 @@ void Player::Update(float deltaTime, sf::RenderWindow& window)
         sprite.setTextureRect(sf::IntRect(xTexture, 0, frameWidth, frameHeight));
 
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(0.6, 0.0) * playerSpeed * deltaTime);
+        sprite.setPosition(position + sf::Vector2f(0.6, 0.0) * playerSpeed * m_game->getDeltaTime());
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
@@ -46,24 +53,23 @@ void Player::Update(float deltaTime, sf::RenderWindow& window)
         sprite.setTextureRect(sf::IntRect(xTexture, 33, frameWidth, frameHeight));
 
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(-0.6, 0.0) * playerSpeed * deltaTime);
+        sprite.setPosition(position + sf::Vector2f(-0.6, 0.0) * playerSpeed * m_game->getDeltaTime());
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(0.0, 0.6) * playerSpeed * deltaTime);
+        sprite.setPosition(position + sf::Vector2f(0.0, 0.6) * playerSpeed * m_game->getDeltaTime());
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(0.0, -0.6) * playerSpeed * deltaTime);
+        sprite.setPosition(position + sf::Vector2f(0.0, -0.6) * playerSpeed * m_game->getDeltaTime());
     }
 }
 
-void Player::Draw(sf::RenderWindow& window, float deltaTime)
+void Player::Draw()
 {
-    window.draw(sprite);
-
+    m_game->DrawSprite(sprite);
 }
 
 sf::Vector2f Player::getPosition() const

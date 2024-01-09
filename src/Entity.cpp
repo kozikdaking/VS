@@ -1,4 +1,11 @@
 #include "../include/Entity.hpp"
+#include "../include/Game.hpp"
+
+Entity::Entity(Game* game)
+:m_game(game)
+{
+
+}
 
 bool Entity::LoadEntitySheet(const std::string &k_filename)
 {
@@ -8,3 +15,12 @@ bool Entity::LoadEntitySheet(const std::string &k_filename)
     }
     return true;
 }
+
+void Entity::Update()
+{}
+
+void Entity::Draw()
+{}
+
+void Entity::DrawAnimation()
+{}

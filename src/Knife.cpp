@@ -1,4 +1,10 @@
 #include "../include/Knife.hpp"
+#include "../include/Player.hpp"
+#include "../include/Game.hpp"
+
+Knife::Knife(Game* game)
+:Entity(game)
+{}
 
 void Knife::Load()
 {
@@ -21,9 +27,9 @@ void Knife::Initialize()
 	bullet.setScale(0.5, 0.5);
 }
 
-void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& player)
+void Knife::Update()
 {
-	sf::Vector2f playerPosition = player.getPosition();
+	sf::Vector2f playerPosition = m_game->GetPlayerPosition();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
@@ -75,11 +81,11 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 
 	for (int i = 0; i < bullets.size(); )
 	{
-		bullets[i].move(bulletDirections[i] * speed * deltaTime);
+		bullets[i].move(bulletDirections[i] * speed * m_game->getDeltaTime());
 
 		sf::Vector2f bulletPosition = bullets[i].getPosition();
-		if (bulletPosition.x < 0 || bulletPosition.x > window.getSize().x ||
-			bulletPosition.y < 0 || bulletPosition.y > window.getSize().y)
+		if (bulletPosition.x < 0 || bulletPosition.x > m_game->getWidth() ||
+			bulletPosition.y < 0 || bulletPosition.y > m_game->getHeight())
 		{
 			//std::cout << "bullet has been removed" << std::endl;
 			bullets.erase(bullets.begin() + i);
@@ -92,11 +98,11 @@ void Knife::Update(float deltaTime, sf::RenderWindow& window, const Player& play
 	}
 }
 
-void Knife::Draw(sf::RenderWindow& window, float deltaTime)
+void Knife::Draw()
 {
 	for (int i = 0; i < bullets.size(); i++)
 	{
-		bullets[i].move(bulletDirections[i] * speed * deltaTime);
-		window.draw(bullets[i]);
+		bullets[i].move(bulletDirections[i] * speed * m_game->getDeltaTime());
+		m_game->DrawSprite(bullets[i]);
 	}
 }
