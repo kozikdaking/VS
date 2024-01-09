@@ -2,11 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Entity.hpp"
+#include <string>
 
 class Knife : public Entity
 {
 private:
-	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::Sprite bullet;
 	sf::Vector2f shootingDirection;

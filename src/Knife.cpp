@@ -5,18 +5,11 @@
 Knife::Knife(Game* game)
 :Entity(game)
 {
-	if (texture.loadFromFile("images/knife.png"))
-	{
-		std::cout << "Knife image has been loaded" << std::endl;
-	}
-	else
-	{
-		std::cout << "Knife image load has been failed" << std::endl;
-	}
-	sprite.setTexture(texture);
+	sf::Texture* texture = m_game->GetTexture("knife");
+	sprite.setTexture(*texture);
 	sprite.setScale(0.5, 0.5);
 
-	bullet.setTexture(texture);
+	bullet.setTexture(*texture);
 	bullet.setScale(0.5, 0.5);
 }
 

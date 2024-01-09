@@ -16,9 +16,12 @@ Game::~Game()
 
 bool Game::Initialize()
 {
+    // Load textures
+    AddTexture("knife", "images/knife.png");
+    AddTexture("player", "images/spritesheet.png");
+
     mPlayer = new Player(this);
     mKnife = new Knife(this);
-    std::cout << mEntities.size();
     return true;
 }
 
@@ -70,4 +73,16 @@ void Game::Shutdown()
 void Game::AddEntity(Entity* entity)
 {
     mEntities.push_back(entity);
+}
+
+sf::Texture* Game::GetTexture(std::string&& name)
+{
+    return mTextures[name];
+}
+
+void Game::AddTexture(std::string&& name, std::string&& filename)
+{
+    sf::Texture* texture = new sf::Texture();
+    texture->loadFromFile(filename);
+    mTextures.emplace(name, texture);
 }
