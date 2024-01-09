@@ -4,9 +4,6 @@
 
 Knife::Knife(Game* game)
 :Entity(game)
-{}
-
-void Knife::Load()
 {
 	if (texture.loadFromFile("images/knife.png"))
 	{
@@ -16,10 +13,6 @@ void Knife::Load()
 	{
 		std::cout << "Knife image load has been failed" << std::endl;
 	}
-}
-
-void Knife::Initialize()
-{
 	sprite.setTexture(texture);
 	sprite.setScale(0.5, 0.5);
 

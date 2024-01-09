@@ -4,7 +4,7 @@
 Entity::Entity(Game* game)
 :m_game(game)
 {
-
+    m_game->AddEntity(this);
 }
 
 bool Entity::LoadEntitySheet(const std::string &k_filename)
@@ -15,12 +15,3 @@ bool Entity::LoadEntitySheet(const std::string &k_filename)
     }
     return true;
 }
-
-void Entity::Update()
-{}
-
-void Entity::Draw()
-{}
-
-void Entity::DrawAnimation()
-{}

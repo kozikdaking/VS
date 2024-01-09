@@ -18,10 +18,7 @@ bool Game::Initialize()
 {
     mPlayer = new Player(this);
     mKnife = new Knife(this);
-    mKnife->Load();
-    mPlayer->Load();
-    mPlayer->Initialize();
-    mKnife->Initialize();
+    std::cout << mEntities.size();
     return true;
 }
 
@@ -49,19 +46,28 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
-    mPlayer->Update();
-    mKnife->Update();
+    for (auto entity: mEntities)
+    {
+        entity->Update();
+    }
 }
 
 void Game::GenerateOutput()
 {
     mWindow.clear();
-    mPlayer->Draw();
-    mKnife->Draw();
+    for (Entity* entity : mEntities)
+    {
+        entity->Draw();   
+    }
     mWindow.display();
 }
 
 void Game::Shutdown()
 {
     mWindow.close();
+}
+
+void Game::AddEntity(Entity* entity)
+{
+    mEntities.push_back(entity);
 }

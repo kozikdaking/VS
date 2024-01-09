@@ -9,9 +9,8 @@ class Entity
 public:
     Entity(class Game* game);
     ~Entity() = default;
-    void Update();
-    void Draw();
-    void DrawAnimation();
+    virtual void Update() = 0;
+    virtual void Draw() = 0;
     bool LoadEntitySheet(const std::string &k_filename);
 
 protected:

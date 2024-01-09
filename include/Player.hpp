@@ -14,10 +14,8 @@ private:
 
 public:
     Player(class Game* game);
-    void Load();
-    void Draw();
-    void Update();
-    void Initialize();
+    void Draw() override;
+    void Update() override;
     sf::Vector2f getPosition() const;
     sf::Vector2f getPlayerPosition() const {
         return sprite.getPosition();
