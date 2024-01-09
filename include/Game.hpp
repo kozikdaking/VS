@@ -19,7 +19,7 @@ public:
     void AddEntity(class Entity* entity);
     void RemoveEntity(class Entity* entity);
 
-    sf::Texture* GetTexture(std::string& name);
+    sf::Texture* GetTexture(std::string&& name);
     float getDeltaTime() const { return mDeltaTime; }
     void DrawSprite(sf::Sprite sprite) { mWindow.draw(sprite); }
     sf::Vector2f GetPlayerPosition() const { return mPlayer->getPosition(); }
@@ -31,7 +31,9 @@ private:
     void UpdateGame();
     void GenerateOutput();
 
-    std::unordered_map<std::string, std::vector<sf::Texture*>> mTextures;
+    void AddTexture(std::string&& name, std::string&& filename);
+
+    std::unordered_map<std::string, sf::Texture*> mTextures;
     std::vector<class Entity*> mEntities;
     sf::RenderWindow mWindow;
     sf::Clock mClock;
