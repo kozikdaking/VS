@@ -1,9 +1,9 @@
 #pragma once
-#include "Player.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Entity.hpp"
 
-class Knife
+class Knife : public Entity
 {
 private:
 	sf::Texture texture;
@@ -17,8 +17,9 @@ private:
 	const float shootCooldown = 500.0f; //as ms
 
 public:
+	Knife(class Game* game);
 	void Load();
 	void Initialize();
-	void Update(float deltaTime, sf::RenderWindow& window, const Player& player);
-	void Draw(sf::RenderWindow& window, float deltaTime);
+	void Update();
+	void Draw();
 };

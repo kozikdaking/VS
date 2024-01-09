@@ -3,8 +3,9 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include "Entity.hpp"
 
-class Player
+class Player : public Entity
 {
 private:
     float playerSpeed = 0.5f;
@@ -12,10 +13,11 @@ private:
     sf::Sprite sprite;
 
 public:
+    Player(class Game* game);
     void Load();
+    void Draw();
+    void Update();
     void Initialize();
-    void Update(float deltaTime, sf::RenderWindow& window);
-    void Draw(sf::RenderWindow& window, float deltaTime);
     sf::Vector2f getPosition() const;
     sf::Vector2f getPlayerPosition() const {
         return sprite.getPosition();
