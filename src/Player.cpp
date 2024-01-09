@@ -4,12 +4,6 @@
 Player::Player(Game* game)
 :Entity(game)
 {
-
-}
-
-void Player::Load()
-{
-
     if (texture.loadFromFile("images/spritesheet.png"))
     {
         std::cout << "Player image has been loaded" << std::endl;
@@ -22,11 +16,6 @@ void Player::Load()
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, 30, 31));
     sprite.setPosition(sf::Vector2f(600, 800));
-
-}
-
-void Player::Initialize()
-{
     sprite.setScale(2.0f, 2.0f);
 }
 

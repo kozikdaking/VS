@@ -18,8 +18,6 @@ private:
 
 public:
 	Knife(class Game* game);
-	void Load();
-	void Initialize();
 	void Update();
 	void Draw();
 };
