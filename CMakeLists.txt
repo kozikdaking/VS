@@ -18,6 +18,7 @@ set(SOURCES
     src/Knife.cpp
     src/Player.cpp
     src/Entity.cpp
+    src/Enemy.cpp
 )
 
 # Add your source files

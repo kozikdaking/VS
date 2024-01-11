@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.hpp"
 #include "Knife.hpp"
+#include "Enemy.hpp"
 
 class Game
 {
@@ -25,6 +26,7 @@ public:
     sf::Vector2f GetPlayerPosition() const { return mPlayer->getPosition(); }
     float getHeight() const { return mHeight; }
     float getWidth() const { return mWidth; }
+    float getElapsedTimeAsSeconds() const { return mClock.getElapsedTime().asSeconds(); }
 
 private:
     void ProcessInput();

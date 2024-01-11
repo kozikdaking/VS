@@ -19,9 +19,11 @@ bool Game::Initialize()
     // Load textures
     AddTexture("knife", "images/knife.png");
     AddTexture("player", "images/spritesheet.png");
+    AddTexture("enemy", "images/enemy.png");
 
     mPlayer = new Player(this);
-    mKnife = new Knife(this);
+    new Knife(this);
+    new Enemy(this);
     return true;
 }
 
