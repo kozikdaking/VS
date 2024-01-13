@@ -1,6 +1,7 @@
 #include "../include/Game.hpp"
 #include "../include/Player.hpp"
 
+
 Player::Player(Game* game)
 :Entity(game)
 {
