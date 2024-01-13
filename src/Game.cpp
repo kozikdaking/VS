@@ -1,4 +1,5 @@
 #include "../include/Game.hpp"
+#include <algorithm>
 
 Game::Game()
 :mHeight(1080)
@@ -22,7 +23,7 @@ bool Game::Initialize()
     AddTexture("enemy", "images/enemy.png");
 
     mPlayer = new Player(this);
-    new Knife(this);
+    // new Knife(this);
     new Enemy(this);
     return true;
 }
@@ -47,6 +48,7 @@ void Game::ProcessInput()
         if (event.type == sf::Event::Closed)
             Shutdown();
     }
+    mState = event.key.code;
 }
 
 void Game::UpdateGame()
@@ -87,4 +89,35 @@ void Game::AddTexture(std::string&& name, std::string&& filename)
     sf::Texture* texture = new sf::Texture();
     texture->loadFromFile(filename);
     mTextures.emplace(name, texture);
+}
+
+void Game::RemoveEntity(Entity* entity)
+{
+    auto iter = std::find(mEntities.begin(), mEntities.end(), entity);
+    if (iter != mEntities.end())
+    {
+        std::iter_swap(iter, mEntities.end()-1);
+        mEntities.pop_back();
+    }
+}
+
+bool Game::checkWeaponCollision(Entity* entity)
+{
+    if (entity->getType() != WEAPON)
+    {
+        std::cout << "Must use weapon\n";
+        return false;
+    }
+
+    for (auto enemy: mEntities)
+    {
+        if (enemy->getType() == ENEMY)
+        {
+            sf::IntRect weapon_r = entity->getRect();
+            sf::IntRect enemy_r = enemy->getRect();
+            if (weapon_r.left >= enemy_r.left && weapon_r.width <= enemy_r.width &&
+                weapon_r.top >= enemy_r.top && weapon_r.height <= enemy_r.height) return true;
+        }
+    }
+    return false;
 }
