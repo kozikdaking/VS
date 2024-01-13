@@ -12,7 +12,4 @@ public:
     void Update() override;
     void Draw() override;
     void DrawAnimation();
-
-private:
-    sf::IntRect m_enemy_rect;
 };

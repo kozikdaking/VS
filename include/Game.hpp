@@ -27,6 +27,8 @@ public:
     float getHeight() const { return mHeight; }
     float getWidth() const { return mWidth; }
     float getElapsedTimeAsSeconds() const { return mClock.getElapsedTime().asSeconds(); }
+    sf::Keyboard::Key mState;
+    bool checkWeaponCollision(Entity* weapon);
 
 private:
     void ProcessInput();
