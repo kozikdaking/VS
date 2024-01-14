@@ -1,10 +1,9 @@
 #include "../include/Enemy.hpp"
-#include "../include/Game.hpp"
 
-Enemy::Enemy(Game* game)
-:Entity(game)
+Enemy::Enemy(Game *game)
+    : Entity(game)
 {
-    m_type = ENEMY;
+    m_type = Type::ENEMY;
     m_position.x = 50;
     m_position.y = 50;
     m_speed = 0.01f;
@@ -32,9 +31,9 @@ void Enemy::Draw()
 
 void Enemy::DrawAnimation()
 {
-    float animation_speed = 0.1f;
-    int texture_width = 140;
-    
+    const float animation_speed = 0.1f;
+    const int texture_width = 140;
+
     if (m_game->getElapsedTimeAsSeconds() > animation_speed)
     {
         if (m_rect.left + m_rect.width >= texture_width)

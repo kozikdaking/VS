@@ -4,12 +4,12 @@
 int main()
 {
     Game game;
-    if (!game.Initialize())
+    if (!game.InitializeGame())
     {
         std::cout << "Game failed to initialize\n";
         return -1;
     }
-    game.RunLoop();
-   
+    game.RunMainLoop();
+
     return 0;
 }

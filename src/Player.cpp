@@ -1,18 +1,16 @@
-#include "../include/Game.hpp"
 #include "../include/Player.hpp"
 
-
-Player::Player(Game* game)
-:Entity(game)
+Player::Player(Game *game)
+    : Entity(game), playerSpeed(0.5f)
 {
-    m_type = PLAYER;
+    m_type = Type::PLAYER;
     sprite.setTexture(*game->GetTexture("player"));
     m_rect = sf::IntRect(0, 0, 30, 31);
     sprite.setTextureRect(m_rect);
     sprite.setPosition(sf::Vector2f(600, 800));
     sprite.setScale(2.0f, 2.0f);
     UpdateRect(120, 124);
-    m_Direction = E;
+    m_Direction = static_cast<int>(Direction::E);
 }
 
 void Player::Update()
@@ -30,7 +28,7 @@ void Player::Update()
 
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0.6, 0.0) * playerSpeed * m_game->getDeltaTime());
-        m_Direction = E;
+        m_Direction = static_cast<int>(Direction::E);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
@@ -40,23 +38,24 @@ void Player::Update()
 
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(-0.6, 0.0) * playerSpeed * m_game->getDeltaTime());
-        m_Direction = W;
+        m_Direction = static_cast<int>(Direction::W);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0.0, 0.6) * playerSpeed * m_game->getDeltaTime());
-        m_Direction = S;
+        m_Direction = static_cast<int>(Direction::S);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0.0, -0.6) * playerSpeed * m_game->getDeltaTime());
-        m_Direction = N;
+        m_Direction = static_cast<int>(Direction::N);
     }
     UpdateRect(120, 124);
     if (m_shootClock.getElapsedTime().asMilliseconds() >= 500.0f)
     {
+
         UseWeapons();
         m_shootClock.restart();
     }
@@ -72,27 +71,31 @@ sf::Vector2f Player::getPosition() const
     return sprite.getPosition();
 }
 
+sf::Vector2f Player::getPlayerPosition() const
+{
+    return sprite.getPosition();
+}
+
 void Player::UseWeapons()
 {
-    Knife* knife = new Knife(m_game);
-
+    Knife *knife = new Knife(m_game);
     switch (m_Direction)
     {
-        case E:
-            knife->SetShootingDirection(sf::Vector2f(1.0, 0.0));
-            knife->SetSpriteRotation(0.0f);
-            break;
-        case W:
-            knife->SetShootingDirection(sf::Vector2f(-1.0, 0.0));
-            knife->SetSpriteRotation(-180.0f);
-            break;
-        case S:
-            knife->SetShootingDirection(sf::Vector2f(0.0, 1.0));
-            knife->SetSpriteRotation(90.0f);
-            break;
-        case N:
-            knife->SetShootingDirection(sf::Vector2f(0.0, -1.0));
-            knife->SetSpriteRotation(-90.0f);
-            break;
+    case static_cast<int>(Direction::E):
+        knife->setShootingDirection(sf::Vector2f(1.0, 0.0));
+        knife->setSpriteRotation(0.0f);
+        break;
+    case static_cast<int>(Direction::W):
+        knife->setShootingDirection(sf::Vector2f(-1.0, 0.0));
+        knife->setSpriteRotation(-180.0f);
+        break;
+    case static_cast<int>(Direction::S):
+        knife->setShootingDirection(sf::Vector2f(0.0, 1.0));
+        knife->setSpriteRotation(90.0f);
+        break;
+    case static_cast<int>(Direction::N):
+        knife->setShootingDirection(sf::Vector2f(0.0, -1.0));
+        knife->setSpriteRotation(-90.0f);
+        break;
     }
 }

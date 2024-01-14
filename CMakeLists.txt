@@ -25,9 +25,13 @@ set(SOURCES
 add_executable(vsclone ${SOURCES})
 
 # Link SFML
-target_link_libraries(vsclone PRIVATE opengl32 sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
+IF(LINUX)
+target_link_libraries(vsclone PRIVATE GL sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
+ENDIF()
 
 IF (WIN32)
+target_link_libraries(vsclone PRIVATE opengl32 sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
+
     add_custom_command(TARGET vsclone POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E copy_directory
                         "C:\\SFML-2.5.0\\bin"

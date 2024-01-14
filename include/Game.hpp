@@ -2,52 +2,50 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <memory>
+
 #include <SFML/Graphics.hpp>
+
 #include "Player.hpp"
 #include "Knife.hpp"
 #include "Enemy.hpp"
+#include "Entity.hpp"
 
 class Game
 {
 public:
     Game();
     ~Game();
-
-    bool Initialize();
-    void RunLoop();
+    bool InitializeGame();
+    void RunMainLoop();
     void Shutdown();
-
-    void AddEntity(class Entity* entity);
-    void RemoveEntity(class Entity* entity);
-
-    sf::Texture* GetTexture(std::string&& name);
-    float getDeltaTime() const { return mDeltaTime; }
-    void DrawSprite(sf::Sprite sprite) { mWindow.draw(sprite); }
-    sf::Vector2f GetPlayerPosition() const { return mPlayer->getPosition(); }
-    float getHeight() const { return mHeight; }
-    float getWidth() const { return mWidth; }
-    float getElapsedTimeAsSeconds() const { return mClock.getElapsedTime().asSeconds(); }
-    sf::Keyboard::Key mState;
-    bool checkWeaponCollision(Entity* weapon);
+    void AddEntity(std::shared_ptr<class Entity> entity);
+    void RemoveEntity(std::weak_ptr<class Entity> entity);
+    std::shared_ptr<sf::Texture> GetTexture(const std::string &name);
+    float getDeltaTime() const;
+    void DrawSprite(sf::Sprite sprite);
+    sf::Vector2f GetPlayerPosition() const;
+    float getHeight() const;
+    float getWidth() const;
+    float getElapsedTimeAsSeconds() const;
+    bool checkWeaponCollision(std::shared_ptr<Entity> const &entity) const;
+    sf::Keyboard::Key getKey() const;
 
 private:
     void ProcessInput();
     void UpdateGame();
     void GenerateOutput();
+    void AddTexture(std::string &&name, std::string &&filename);
 
-    void AddTexture(std::string&& name, std::string&& filename);
-
-    std::unordered_map<std::string, sf::Texture*> mTextures;
-    std::vector<class Entity*> mEntities;
+    sf::Keyboard::Key mState;
+    std::unordered_map<std::string, std::shared_ptr<sf::Texture>> mTextures;
+    std::vector<std::shared_ptr<Entity>> mEntities;
     sf::RenderWindow mWindow;
     sf::Clock mClock;
     float mDeltaTime;
-
     bool mIsRunning;
-
-    Player* mPlayer;
-    Knife* mKnife;
-
+    std::shared_ptr<class Player> mPlayer;
+    std::shared_ptr<class Knife> mKnife;
     const float mHeight;
     const float mWidth;
 };

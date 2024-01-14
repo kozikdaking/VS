@@ -1,34 +1,36 @@
 #include "../include/Game.hpp"
-#include <algorithm>
-
 Game::Game()
-:mHeight(1080)
-,mWidth(1920)
-,mWindow(sf::VideoMode(1920, 1080), "My window")
-,mIsRunning(true)
-,mPlayer(nullptr)
-,mKnife(nullptr)
-{ 
+    : mHeight(1080), mWidth(1920), mWindow(sf::VideoMode(1920, 1080), "My window"), mIsRunning(true), mPlayer(nullptr), mKnife(nullptr)
+{
     mWindow.setFramerateLimit(60);
 }
 
 Game::~Game()
-{}
-
-bool Game::Initialize()
 {
-    // Load textures
+    Shutdown();
+}
+
+bool Game::InitializeGame()
+{
+
+#ifdef WIN32
     AddTexture("knife", "images/knife.png");
     AddTexture("player", "images/spritesheet.png");
     AddTexture("enemy", "images/enemy.png");
 
-    mPlayer = new Player(this);
-    // new Knife(this);
-    new Enemy(this);
+#else
+    AddTexture("knife", "../images/knife.png");
+    AddTexture("player", "../images/spritesheet.png");
+    AddTexture("enemy", "../images/enemy.png");
+#endif
+
+    mPlayer = std::make_shared<Player>(this);
+    mKnife = std::make_shared<Knife>(this);
+    // new Enemy(this);
     return true;
 }
 
-void Game::RunLoop()
+void Game::RunMainLoop()
 {
     while (mIsRunning)
     {
@@ -37,6 +39,99 @@ void Game::RunLoop()
         GenerateOutput();
     }
 }
+
+void Game::Shutdown()
+{
+    mWindow.close();
+}
+
+void Game::AddEntity(std::shared_ptr<Entity> entity)
+{
+    mEntities.emplace_back(entity);
+}
+
+void Game::RemoveEntity(std::weak_ptr<Entity> entity)
+{
+    auto sharedEntity = entity.lock();
+    if (sharedEntity)
+    {
+        mEntities.erase(std::remove(mEntities.begin(), mEntities.end(), sharedEntity), mEntities.end());
+    }
+}
+
+std::shared_ptr<sf::Texture> Game::GetTexture(const std::string &name)
+{
+    auto it = mTextures.find(name);
+    if (it != mTextures.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+float Game::getDeltaTime() const
+{
+    return mDeltaTime;
+}
+
+void Game::DrawSprite(sf::Sprite sprite)
+{
+    mWindow.draw(sprite);
+}
+
+sf::Vector2f Game::GetPlayerPosition() const
+{
+    return mPlayer->getPosition();
+}
+
+float Game::getHeight() const
+{
+    return mHeight;
+}
+
+float Game::getWidth() const
+{
+    return mWidth;
+}
+
+float Game::getElapsedTimeAsSeconds() const
+{
+    return mClock.getElapsedTime().asSeconds();
+}
+
+bool Game::checkWeaponCollision(std::shared_ptr<Entity> const &entity) const
+{
+    if (entity->getType() != Type::WEAPON)
+    {
+        std::cout << "Must use weapon\n";
+        return false;
+    }
+
+    for (std::shared_ptr<Entity> const &enemy : mEntities)
+    {
+        if (enemy->getType() == Type::ENEMY)
+        {
+            sf::IntRect weapon_r = entity->getRect();
+            sf::IntRect enemy_r = enemy->getRect();
+            if (weapon_r.left >= enemy_r.left && weapon_r.width <= enemy_r.width &&
+                weapon_r.top >= enemy_r.top && weapon_r.height <= enemy_r.height)
+                return true;
+        }
+    }
+    return false;
+}
+
+sf::Keyboard::Key Game::getKey() const
+{
+    return mState;
+}
+
+/*
+ * Private methods
+ */
 
 void Game::ProcessInput()
 {
@@ -53,7 +148,7 @@ void Game::ProcessInput()
 
 void Game::UpdateGame()
 {
-    for (auto entity: mEntities)
+    for (auto entity : mEntities)
     {
         entity->Update();
     }
@@ -62,62 +157,20 @@ void Game::UpdateGame()
 void Game::GenerateOutput()
 {
     mWindow.clear();
-    for (Entity* entity : mEntities)
+    for (std::shared_ptr<Entity> entity : mEntities)
     {
-        entity->Draw();   
+        entity->Draw();
     }
     mWindow.display();
 }
 
-void Game::Shutdown()
+void Game::AddTexture(std::string &&name, std::string &&filename)
 {
-    mWindow.close();
-}
-
-void Game::AddEntity(Entity* entity)
-{
-    mEntities.push_back(entity);
-}
-
-sf::Texture* Game::GetTexture(std::string&& name)
-{
-    return mTextures[name];
-}
-
-void Game::AddTexture(std::string&& name, std::string&& filename)
-{
-    sf::Texture* texture = new sf::Texture();
-    texture->loadFromFile(filename);
-    mTextures.emplace(name, texture);
-}
-
-void Game::RemoveEntity(Entity* entity)
-{
-    auto iter = std::find(mEntities.begin(), mEntities.end(), entity);
-    if (iter != mEntities.end())
+    auto texture = std::make_shared<sf::Texture>();
+    if (!texture->loadFromFile(filename))
     {
-        std::iter_swap(iter, mEntities.end()-1);
-        mEntities.pop_back();
+        std::cerr << "Failed to load texture from file: " << filename << std::endl;
+        return;
     }
-}
-
-bool Game::checkWeaponCollision(Entity* entity)
-{
-    if (entity->getType() != WEAPON)
-    {
-        std::cout << "Must use weapon\n";
-        return false;
-    }
-
-    for (auto enemy: mEntities)
-    {
-        if (enemy->getType() == ENEMY)
-        {
-            sf::IntRect weapon_r = entity->getRect();
-            sf::IntRect enemy_r = enemy->getRect();
-            if (weapon_r.left >= enemy_r.left && weapon_r.width <= enemy_r.width &&
-                weapon_r.top >= enemy_r.top && weapon_r.height <= enemy_r.height) return true;
-        }
-    }
-    return false;
+    mTextures.emplace(name, std::move(texture));
 }

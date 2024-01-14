@@ -1,17 +1,23 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Entity.hpp"
 #include <string>
+#include <iostream>
 
-class Knife : protected Entity
+#include <SFML/Graphics.hpp>
+
+#include "Entity.hpp"
+#include "Player.hpp"
+#include "Game.hpp"
+
+class Knife : public Entity
 {
 public:
-	Knife(class Game* game);
+	Knife(class Game *game);
 	void Update();
 	void Draw();
-	void SetShootingDirection(sf::Vector2f dir) { shootingDirection = dir; }
-	const float shootCooldown = 500.0f; //as ms
+	void setShootingDirection(sf::Vector2f dir);
+	void setSpriteRotation(float rot);
+
+private:
+	const float shootCooldown = 500.0f; // as ms
 	sf::Vector2f shootingDirection;
-	void SetSpriteRotation(float rot) {m_sprite.setRotation(rot);}
 };

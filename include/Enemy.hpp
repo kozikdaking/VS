@@ -7,9 +7,9 @@
 class Enemy : public Entity
 {
 public:
-    Enemy(Game* game);
+    Enemy(class Game *game);
     ~Enemy() = default;
-    void Update() override;
-    void Draw() override;
+    void Update();
+    void Draw();
     void DrawAnimation();
 };
