@@ -4,12 +4,11 @@
 
 #include "Entity.hpp"
 
-class Enemy : public Entity
-{
+class Enemy : public Entity {
 public:
-    Enemy(class Game *game);
-    ~Enemy() = default;
-    void Update();
-    void Draw();
-    void DrawAnimation();
+  Enemy(class Game *game);
+  ~Enemy() = default;
+  void Update() override;
+  void Draw() override;
+  void DrawAnimation();
 };

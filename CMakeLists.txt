@@ -26,7 +26,7 @@ add_executable(vsclone ${SOURCES})
 
 # Link SFML
 IF(LINUX)
-target_link_libraries(vsclone PRIVATE GL sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
+target_link_libraries(vsclone PRIVATE sfml-graphics sfml-window sfml-system sfml-network sfml-audio)
 ENDIF()
 
 IF (WIN32)

@@ -9,22 +9,20 @@
 
 #include "Entity.hpp"
 #include "Knife.hpp"
-#include "Game.hpp"
 
-class Player : public Entity
-{
+class Player : public Entity {
 public:
-    Player(class Game *game);
-    void Draw();
-    void Update();
-    sf::Vector2f getPosition() const;
-    sf::Vector2f getPlayerPosition() const;
-    void UseWeapons();
+  Player(class Game *game);
+  void Draw() override;
+  void Update() override;
+  sf::Vector2f getPosition() const;
+  sf::Vector2f getPlayerPosition() const;
+  void UseWeapons();
 
 private:
-    float playerSpeed;
-    sf::Texture texture;
-    sf::Sprite sprite;
-    sf::Clock m_shootClock;
-    int m_Direction;
+  float playerSpeed;
+  sf::Texture texture;
+  sf::Sprite sprite;
+  sf::Clock m_shootClock;
+  int m_Direction;
 };
