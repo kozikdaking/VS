@@ -1,9 +1,7 @@
 #include "../include/Entity.hpp"
 #include "../include/Game.hpp"
 
-Entity::Entity(Game *game) : m_game(game) {
-  //   m_game->AddEntity(this->shared_from_this());
-}
+Entity::Entity(Game *game) : m_game(game) {}
 
 void Entity::init() { m_game->AddEntity(shared_from_this()); }
 

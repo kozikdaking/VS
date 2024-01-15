@@ -2,7 +2,7 @@
 Game::Game()
     : mHeight(1080), mWidth(1920),
       mWindow(sf::VideoMode(1920, 1080), "My window"), mIsRunning(true),
-      mPlayer(nullptr) {
+      mPlayer(nullptr), mEnemy(nullptr) {
   mWindow.setFramerateLimit(60);
 }
 
@@ -22,8 +22,9 @@ bool Game::InitializeGame() {
 #endif
 
   mPlayer = std::make_shared<Player>(this);
-
   AddEntity(mPlayer);
+  mEnemy = std::make_shared<Enemy>(this);
+  AddEntity(mEnemy);
   return true;
 }
 
@@ -42,11 +43,12 @@ void Game::AddEntity(std::shared_ptr<Entity> entity) {
 }
 
 void Game::RemoveEntity(std::weak_ptr<Entity> entity) {
-  auto sharedEntity = entity.lock();
-  if (sharedEntity) {
-    mEntities.erase(
-        std::remove(mEntities.begin(), mEntities.end(), sharedEntity),
-        mEntities.end());
+  auto entity_ptr = entity.lock();
+  if (entity_ptr) {
+    auto iter = std::find(mEntities.begin(), mEntities.end(), entity_ptr);
+    if (iter != mEntities.end()) {
+      mEntities.erase(iter);
+    }
   }
 }
 
@@ -109,7 +111,7 @@ void Game::ProcessInput() {
 }
 
 void Game::UpdateGame() {
-  for (const auto &entity : mEntities) {
+  for (auto entity : mEntities) {
     if (entity != nullptr)
       entity->Update();
   }

@@ -44,7 +44,7 @@ private:
   float mDeltaTime;
   bool mIsRunning;
   std::shared_ptr<Player> mPlayer;
-  std::shared_ptr<Knife> mKnife;
+  std::shared_ptr<Enemy> mEnemy;
   const float mHeight;
   const float mWidth;
 };
