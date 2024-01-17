@@ -10,6 +10,7 @@
 #include "Entity.hpp"
 #include "Knife.hpp"
 #include "Player.hpp"
+#include "Map.hpp"
 
 class Game {
 public:
@@ -43,8 +44,8 @@ private:
   sf::Clock mClock;
   float mDeltaTime;
   bool mIsRunning;
+  std::unique_ptr<Map> mMap;
   std::shared_ptr<Player> mPlayer;
-  std::shared_ptr<Enemy> mEnemy;
   const float mHeight;
   const float mWidth;
 };
