@@ -10,6 +10,8 @@
 #include "Entity.hpp"
 #include "Knife.hpp"
 #include "Player.hpp"
+#include "Map.hpp"
+#include "Camera.hpp"
 
 class Game {
 public:
@@ -29,6 +31,7 @@ public:
   float getElapsedTimeAsSeconds() const;
   bool checkWeaponCollision(std::shared_ptr<Entity> const &entity) const;
   sf::Keyboard::Key getKey() const;
+  void setView(sf::View& view);
 
 private:
   void ProcessInput();
@@ -43,8 +46,9 @@ private:
   sf::Clock mClock;
   float mDeltaTime;
   bool mIsRunning;
+  std::unique_ptr<Map> mMap;
   std::shared_ptr<Player> mPlayer;
-  std::shared_ptr<Enemy> mEnemy;
   const float mHeight;
   const float mWidth;
+  std::unique_ptr<Camera> mCamera;
 };

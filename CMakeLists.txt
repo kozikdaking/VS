@@ -19,6 +19,8 @@ set(SOURCES
     src/Player.cpp
     src/Entity.cpp
     src/Enemy.cpp
+    src/Map.cpp
+    src/Camera.cpp
 )
 
 # Add your source files

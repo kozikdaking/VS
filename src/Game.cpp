@@ -2,7 +2,8 @@
 Game::Game()
     : mHeight(1080), mWidth(1920),
       mWindow(sf::VideoMode(1920, 1080), "My window"), mIsRunning(true),
-      mPlayer(nullptr), mEnemy(nullptr) {
+      mPlayer(nullptr),
+      mMap(nullptr) {
   mWindow.setFramerateLimit(60);
 }
 
@@ -14,17 +15,19 @@ bool Game::InitializeGame() {
   AddTexture("knife", "images/knife.png");
   AddTexture("player", "images/spritesheet.png");
   AddTexture("enemy", "images/enemy.png");
-
+  AddTexture("library_tiles", "images/library_tileset.png");
 #else
   AddTexture("knife", "../images/knife.png");
   AddTexture("player", "../images/spritesheet.png");
   AddTexture("enemy", "../images/enemy.png");
+  AddTexture("library_tiles", "../images/library_tileset.png");
 #endif
-
+  mMap = std::make_unique<Map>(this);
+  mMap->Initialize();
   mPlayer = std::make_shared<Player>(this);
+  mCamera = std::make_unique<Camera>(this);
   AddEntity(mPlayer);
-  mEnemy = std::make_shared<Enemy>(this);
-  AddEntity(mEnemy);
+  AddEntity(std::make_shared<Enemy>(this));
   return true;
 }
 
@@ -57,6 +60,7 @@ std::shared_ptr<sf::Texture> Game::GetTexture(const std::string &name) {
   if (it != mTextures.end()) {
     return it->second;
   } else {
+    std::cout << "cant find " << name << std::endl;
     return nullptr;
   }
 }
@@ -93,6 +97,11 @@ bool Game::checkWeaponCollision(std::shared_ptr<Entity> const &entity) const {
   return false;
 }
 
+void Game::setView(sf::View &view)
+{
+  mWindow.setView(view);
+}
+
 sf::Keyboard::Key Game::getKey() const { return mState; }
 
 /*
@@ -115,10 +124,12 @@ void Game::UpdateGame() {
     if (entity != nullptr)
       entity->Update();
   }
+  mCamera->follow(GetPlayerPosition());
 }
 
 void Game::GenerateOutput() {
   mWindow.clear();
+  mMap->Draw();
   for (const auto &entity : mEntities) {
     entity->Draw();
   }
