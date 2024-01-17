@@ -25,6 +25,7 @@ bool Game::InitializeGame() {
   mMap = std::make_unique<Map>(this);
   mMap->Initialize();
   mPlayer = std::make_shared<Player>(this);
+  mCamera = std::make_unique<Camera>(this);
   AddEntity(mPlayer);
   AddEntity(std::make_shared<Enemy>(this));
   return true;
@@ -96,6 +97,11 @@ bool Game::checkWeaponCollision(std::shared_ptr<Entity> const &entity) const {
   return false;
 }
 
+void Game::setView(sf::View &view)
+{
+  mWindow.setView(view);
+}
+
 sf::Keyboard::Key Game::getKey() const { return mState; }
 
 /*
@@ -118,6 +124,7 @@ void Game::UpdateGame() {
     if (entity != nullptr)
       entity->Update();
   }
+  mCamera->follow(GetPlayerPosition());
 }
 
 void Game::GenerateOutput() {

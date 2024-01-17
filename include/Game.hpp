@@ -11,6 +11,7 @@
 #include "Knife.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
+#include "Camera.hpp"
 
 class Game {
 public:
@@ -30,6 +31,7 @@ public:
   float getElapsedTimeAsSeconds() const;
   bool checkWeaponCollision(std::shared_ptr<Entity> const &entity) const;
   sf::Keyboard::Key getKey() const;
+  void setView(sf::View& view);
 
 private:
   void ProcessInput();
@@ -48,4 +50,5 @@ private:
   std::shared_ptr<Player> mPlayer;
   const float mHeight;
   const float mWidth;
+  std::unique_ptr<Camera> mCamera;
 };
